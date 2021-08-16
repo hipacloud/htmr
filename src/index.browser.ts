@@ -12,10 +12,10 @@ export default function htmrBrowser(
     throw new TypeError('Expected HTML string');
   }
 
-  const container = document.createElement('div');
-  container.innerHTML = html.trim();
+  const domParser = new DOMParser();
+  const doc = domParser.parseFromString(html.trim(), 'text/html');
 
-  const nodes = Array.from(container.childNodes)
+  const nodes = Array.from(doc.body.childNodes)
     .map((childNode, index) => {
       return toReactNode(childNode as any, String(index), options);
     })
